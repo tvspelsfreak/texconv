@@ -336,10 +336,21 @@ bool generatePreview(const QString& textureFilename, const QString& paletteFilen
 				const int y = (twidx / (currentWidth / 2)) * 2;
 
 				if (genPreview) {
-					img.setPixel(x + 0, y + 0, to32BPP(texel0, pixelFormat));
-					img.setPixel(x + 0, y + 1, to32BPP(texel1, pixelFormat));
-					img.setPixel(x + 1, y + 0, to32BPP(texel2, pixelFormat));
-					img.setPixel(x + 1, y + 1, to32BPP(texel3, pixelFormat));
+					QRgb rgb[4];
+					if (pixelFormat == PIXELFORMAT_YUV422) {
+						YUV422toRGB(texel0, texel2, rgb[0], rgb[2]);
+						YUV422toRGB(texel1, texel3, rgb[1], rgb[3]);
+					} else {
+						rgb[0] = to32BPP(texel0, pixelFormat);
+						rgb[1] = to32BPP(texel1, pixelFormat);
+						rgb[2] = to32BPP(texel2, pixelFormat);
+						rgb[3] = to32BPP(texel3, pixelFormat);
+					}
+
+					img.setPixel(x + 0, y + 0, rgb[0]);
+					img.setPixel(x + 0, y + 1, rgb[1]);
+					img.setPixel(x + 1, y + 0, rgb[2]);
+					img.setPixel(x + 1, y + 1, rgb[3]);
 				}
 
 				if (genCodeUsage) {
