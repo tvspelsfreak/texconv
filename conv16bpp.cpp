@@ -126,7 +126,8 @@ static int encodeLossless(const ImageContainer& images, int pixelFormat, QVector
 		if (img.width() < MIN_MIPMAP_VQ || img.height() < MIN_MIPMAP_VQ)
 			continue;
 
-		QImage indexedImage(img.width() / 2, img.height() / 2, QImage::Format_ARGB32);
+		QImage indexedImage(img.width() / 2, img.height() / 2, QImage::Format_Indexed8);
+		indexedImage.setColorCount(256);
 
 		for (int y=0; y<img.height(); y+=2) {
 			for (int x=0; x<img.width(); x+=2) {
