@@ -230,10 +230,10 @@ static void devectorizeRGB(const ImageContainer& srcImages, const QVector<Vec<12
 	int vindex = 0;
 
 	for (int i=0; i<srcImages.imageCount(); i++) {
-		int size = srcImages.getByIndex(i).width();
-		if (size == 1)
+		const QSize size = srcImages.getByIndex(i).size();
+		if (size.width() == 1 || size.height() == 1)
 			continue;
-		QImage img(size/2, size/2, QImage::Format_Indexed8);
+		QImage img(size.width()/2, size.height()/2, QImage::Format_Indexed8);
 		img.setColorCount(256);
 		for (int y=0; y<img.height(); y++) {
 			for (int x=0; x<img.width(); x++) {

@@ -3,7 +3,6 @@
 #include "common.h"
 
 bool ImageContainer::load(const QStringList& filenames, const int textureType, const Qt::TransformationMode mipmapFilter) {
-	const bool compressed	= (textureType & FLAG_COMPRESSED);
 	const bool mipmapped	= (textureType & FLAG_MIPMAPPED);
 
 	if ((filenames.size() > 1) && !mipmapped) {
@@ -25,8 +24,8 @@ bool ImageContainer::load(const QStringList& filenames, const int textureType, c
 			return false;
 		}
 
-		if ((compressed || mipmapped) && (img.width() != img.height())) {
-			qCritical() << "Image" << filename << "is not square. Input images for compressed and mipmapped textures must be square";
+		if (mipmapped && (img.width() != img.height())) {
+			qCritical() << "Image" << filename << "is not square. Input images for mipmapped textures must be square";
 			return false;
 		}
 
