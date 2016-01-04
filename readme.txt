@@ -52,7 +52,7 @@ texconv --in img1.jpg --in img2.png --format RGB565 --mipmap
 		  1x1 - 'img2.png' (downscaled)
 
 texconv --in img.jpg --out a.tex --format PAL4BPP --compress 
-		--preview preview.png --vqcodeusage --usage.png
+		--preview preview.png --vqcodeusage usage.png
 	Creates a compressed 4-bit paletted texture 'a.tex' using 'img.jpg' as
 	input. A palette file 'a.tex.pal' will also be created. A preview file
 	'preview.png' showing what the texture looks is generated as well as
@@ -68,7 +68,7 @@ These are all limitations set by the hardware.
 	256, 512 or 1024. There are two exceptions to this rule, see the -mipmap
 	and -stride flags for more info.
 
-*	Mipmapped and compressed textures must be square.
+*	Mipmapped textures must be square.
 
 *	Strided textures can't be compressed, twiddled or mipmapped.
 
@@ -222,10 +222,14 @@ typedef struct {
 It is then followed by 'numcolors' 32-bit packed ARGB values.
 
 The Dreamcast supports four different palette color formats, RGB565, ARGB1555
-ARGB4444 and ARGB8888. The palette format only uses the last one. But it can
-easily be converted by the user to any of the other formats when the palette
-is loaded. See the 'to16BPP' function if you need to know how to do the
-conversion.
+ARGB4444 and ARGB8888, but palette files are always saved in the ARGB8888
+format. Your game can easily convert this to any other format before uploading
+the palette to the PVR chip though. See the 'to16BPP' function if you need to
+know how to do the conversion.
+The reasoning behind always saving palettes as ARGB8888 is that the palette 
+format setting is global, not per texture. So it makes sense to leave it up to
+the game to decide which format to use. That way you can also switch formats
+without having to reconvert your textures.
 
 
 
