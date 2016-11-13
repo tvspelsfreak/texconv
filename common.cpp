@@ -2,6 +2,7 @@
 #include "imagecontainer.h"
 #include "vqtools.h"
 #include <assert.h>
+#include <cmath>
 
 static inline bool powerOfTwo(int x) {
 	return ((x != 0) && !(x & (x - 1)));

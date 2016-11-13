@@ -7,6 +7,7 @@
 #include <QElapsedTimer>
 #include <QColor>
 #include <QFile>
+#include <cmath>
 
 // N-dimensional vectors, for input to a VectorQuantizer.
 template <uint N>
